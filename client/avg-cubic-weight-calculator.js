@@ -38,6 +38,7 @@ function fetchData(url) {
       }
     },
     error: function(err) {
+      $("#error-message").text("Error in fetching Data. Please resolve CORS issue from server side");
       console.log(err);
     }
   });

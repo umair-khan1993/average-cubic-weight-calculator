@@ -25,24 +25,22 @@ function computeCubicWeight(size) {
 function fetchData(url) {
   var specifiedCategoriesFound = [];
   $.ajax({
-        url: baseUrl + url,
-        type: "GET",
-
-        success: function(res) {
-          processData(res.objects);
-          if (res.next) {
-            /*paginated API reuiring recursive calls*/
-            fetchData(res.next);
-          } else {
-            averageCubicWeight = computeAverageCubicWeight();
-            console.log("totalItems" + totalItems);
-            console.log("averageCubicWeight" + averageCubicWeight);
-          }
-        },
-        error: function(err) {
-          console.log(err);
-        }
-      });
+    url: baseUrl + url,
+    type: "GET",
+    success: function(res) {
+      processData(res.objects);
+      if (res.next) {
+        fetchData(res.next);
+      } else {
+        averageCubicWeight = computeAverageCubicWeight();
+        $("#item-count").text(totalItems);
+        $("#average-weight").text(averageCubicWeight + " Kg")
+      }
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
 }
 
 function processData(data) {
